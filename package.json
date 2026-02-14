@@ -1,0 +1,19 @@
+{
+  "name": "live-fs",
+  "version": "1.0.0",
+  "description": "service file sistem live...",
+  "license": "ISC",
+  "author": "waone",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "dependencies": {
+    "chokidar": "^5.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.4",
+    "express": "^5.2.1",
+    "prompt-sync": "^4.2.0"
+  }
+}
