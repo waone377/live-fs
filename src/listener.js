@@ -19,6 +19,7 @@ async function serviceListener() {
       );
       if (confirm === "n") throw "";
       pathAudit1 = h.pathAudit1;
+      pathAudit = h.pathAudit;
       setOrigin = h.setOrigin;
     } catch {
       while (true) {
@@ -41,7 +42,7 @@ async function serviceListener() {
       await fs.mkdir("history", { recursive: true });
       await fs.writeFile(
         "history/listener.json",
-        JSON.stringify({ pathAudit1, setOrigin }, null, 4),
+        JSON.stringify({ pathAudit1, pathAudit, setOrigin }, null, 4),
       );
     }
     const app = express();
@@ -129,7 +130,6 @@ async function serviceListener() {
       }
     });
     app.use((err, req, res, next) => {
-      console.clear();
       console.log(err.stack);
       res.status(err.statusCode || 500).json({
         statusText: "server_error",
