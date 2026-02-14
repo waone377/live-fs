@@ -14,14 +14,11 @@ async function serviceListener() {
       await fs.access("history/listener.json");
       const h = JSON.parse(await fs.readFile("history/listener.json", "utf-8"));
       const confirm = Input.pilih(
-        `ada history:\npathAudit: ${h.pathAudit1}\ndomain/ip: ${h.setOrigin}\ngunakan (y/n)? `,
+        `ada history:\ndomain/ip: ${h.setOrigin}\ngunakan (y/n)? `,
         ["y", "n"],
       );
       if (confirm === "n") throw "";
-      pathAudit1 = h.pathAudit1;
-      pathAudit = h.pathAudit;
       setOrigin = h.setOrigin;
-    } catch {
       while (true) {
         const target_audit = Input.wajib(
           "masukan lokasi directory yang akan diaudit: ~/",
@@ -38,11 +35,12 @@ async function serviceListener() {
       let arrAudit = pathAudit1.split("/");
       arrAudit.pop();
       pathAudit = arrAudit.join("/");
+    } catch {
       setOrigin = Input.wajib("masukan domain/ip yang diizinkan request?: ");
       await fs.mkdir("history", { recursive: true });
       await fs.writeFile(
         "history/listener.json",
-        JSON.stringify({ pathAudit1, pathAudit, setOrigin }, null, 4),
+        JSON.stringify({ setOrigin }, null, 4),
       );
     }
     const app = express();

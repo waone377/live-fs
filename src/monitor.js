@@ -18,11 +18,10 @@ async function serviceMonitor() {
           await fs.readFile("history/serverYes.json", "utf-8"),
         );
         const confirm = Input.pilih(
-          `ada history:\npathMonitor: ${serverYes.pathMonitor}\norigin: ${serverYes.origin}\ngunakan (y/n)?: `,
+          `ada history:\norigin: ${serverYes.origin}\ngunakan (y/n)?: `,
           ["y", "n"],
         );
         if (confirm === "n") throw "";
-        pathMonitor = serverYes.pathMonitor;
         origin = serverYes.origin;
       } catch {}
     } else {
@@ -39,6 +38,13 @@ async function serviceMonitor() {
         pathMonitor = serverYes.pathMonitor;
         pathAudit = serverYes.pathAudit;
       } catch {}
+    }
+    if (!origin && opsiHttp === "y") {
+      origin = Input.wajib("masukan domain/ip server?: ");
+      await fs.writeFile(
+        "history/serverYes.json",
+        JSON.stringify({ origin }, null, 4),
+      );
     }
     if (!pathMonitor) {
       while (true) {
@@ -74,13 +80,6 @@ async function serviceMonitor() {
       await fs.writeFile(
         "history/serverNo.json",
         JSON.stringify({ pathMonitor, pathAudit }, null, 4),
-      );
-    }
-    if (!origin && opsiHttp === "y") {
-      origin = Input.wajib("masukan domain/ip server?: ");
-      await fs.writeFile(
-        "history/serverYes.json",
-        JSON.stringify({ pathMonitor, origin }, null, 4),
       );
     }
     // implementasi chokidar
